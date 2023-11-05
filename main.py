@@ -44,7 +44,7 @@ def root():
     return post_db
 
 
-@app.post('/post')
+@app.post('/post', response_model=Timestamp)
 # создаем новую запись в post_db и возвращаем её в случае успешного создания
 def get_post():
     try:
@@ -56,20 +56,16 @@ def get_post():
     return new_row
 
 
-@app.get('/dog')
-# возвращаем инофрмацию о всех собаках вводимой породы, иначе ошибку
+@app.get('/dog', response_model=Dog)
+# возвращаем инофрмацию о всех собаках вводимой породы, иначе ошибку. Если порода не выбрана, воззвращаем всех собак
 def get_dogs(kind: DogType):
-    dog_list = [dog for dog in dogs_db.values() if dog.kind == kind]
-    return dog_list
+    if not kind:
+        return dogs_db
+    else:
+        dog_list = [dog for dog in dogs_db.values() if dog.kind == kind]
+        return dog_list
 
-
-@app.get('/dogs')
-# возвращаем инофрмацию о всех собаках в питомнике
-def get_dogs_all():
-    return dogs_db
-
-
-@app.post('/dog', response_model=Dog, summary='Create Dog')
+@app.post('/dog', response_model=Dog)
 # создаем новую запись в dogs_db и возвращаем её в случае успешного создания
 def create_dog(dog: Dog):
     if dog.pk in dogs_db:
@@ -78,14 +74,14 @@ def create_dog(dog: Dog):
     return dog
 
 
-@app.get("/dog/{pk}")
+@app.get("/dog/{pk}", response_model=Dog)
 def get_dog_by_pk(pk: int):
     if pk not in dogs_db:
         raise HTTPException(status_code=422, detail=f"Собака по данному PK ({pk}) не найдена!")
     return dogs_db[pk]
 
 
-@app.patch("/dog/{pk}")
+@app.patch("/dog/{pk}", response_model=Dog)
 def update_dog(pk: int, dog: Dog):
     if pk not in dogs_db:
         raise HTTPException(status_code=422, detail=f"Собака по данному PK ({pk}) не найдена!")
