@@ -10,4 +10,4 @@ requirments_correct.txt - файл с зафиксированными верс�
 
 requirments.txt - файл для работы render.com
 
-[Ссылка на сервис]([https://vet-clinic-demo.onrender.com/])
+[Ссылка на сервис](https://vet-clinic-demo.onrender.com/)
