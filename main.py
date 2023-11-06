@@ -1,7 +1,7 @@
 from enum import Enum
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from typing import Union, list
+from typing import Union, List
 
 app = FastAPI()
 
@@ -57,7 +57,7 @@ def get_post():
     return new_row
 
 
-@app.get('/dog', response_model=list[Dog])
+@app.get('/dog', response_model=List[Dog])
 # возвращаем инофрмацию о всех собаках вводимой породы, иначе ошибку. Если порода не выбрана, воззвращаем всех собак
 def get_dogs(kind: Union[str, None] = None):
     if kind is None:
