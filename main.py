@@ -23,6 +23,7 @@ class Timestamp(BaseModel):
     timestamp: int
 
 
+
 dogs_db = {
     0: Dog(name='Bob', pk=0, kind='terrier'),
     1: Dog(name='Marli', pk=1, kind="bulldog"),
