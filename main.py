@@ -2,6 +2,7 @@ from enum import Enum
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import Union, List
+import uvicorn
 
 app = FastAPI()
 
@@ -92,3 +93,6 @@ def update_dog(pk: int, dog: Dog):
         raise HTTPException(status_code=422, detail=f"Нельзя менять pk!")
     dogs_db[pk] = dog
     return dog
+
+
+uvicorn.run(app, host="0.0.0.0", port=5555)
